@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>ProGest</title>
+    <style>
+        .error-message {
+            color: red;
+        }
+
+        .valid-message {
+            color: green;
+        }
+    </style>
+</head>
+
+<body>
+    <form>
+        <table>
+            <tr>
+                <td><a href="accueil.html">Home</a></td>
+                <td><a href="projet.html">Projets et tache</a></td>
+                <td><a href="liste.html">Liste des employés</a></td>
+                <td><a href="inscription.html">Inscription</a></td>
+            </tr>
+            <tr>
+                <td><label for="name">Nom:</label></td>
+                <td><input id="nom" type="text" name="name" required minlength="3" maxlength="20" size="10" required pattern="[A-Za-z]{2,}" title="Veuillez entrer un nom valide (lettres uniquement)"></td>
+                <td><span id="error" class="error-message"></span> <span id="valid" class="valid-message"></span></td>
+            </tr>
+            <tr>
+                <td><label for="name">Prenom:</label></td>
+                <td><input id="prenom" type="text" name="name" required minlength="3" maxlength="20" size="10" required pattern="[A-Za-z]{2,}" title="Veuillez entrer un prenom valide (lettres uniquement)"></td>
+                <td><span id="error1" class="error-message"></span> <span id="valid1" class="valid-message"></span></td>
+            </tr>
+            <tr>
+                <td><label for="name">Email:</label></td>
+                <td><input type="text" id="email" name="name" required minlength="3" maxlength="20" size="10" required></td>
+                <td><span id="error5" class="error-message"></span> <span id="valid5" class="valid-message"></span></td>
+            </tr>
+            <tr>
+                <td><label for="name">Télephone:</label></td>
+                <td><input type="text" id="tel" name="name" required minlength="3" maxlength="20" size="10" required pattern="[0-9]{8}" title="Veuillez entrez un numéro de téléphone valide (8 chiffres)"></td>
+                <td><span id="error2" class="error-message"></span> <span id="valid2" class="valid-message"></span></td>
+
+            </tr>
+            <tr>
+                <td><label for="name">Date:</label></td>
+                <td><input id="date" type="date" required></td>
+                <td><span id="error3" class="error-message"></span> <span id="valid3" class="valid-message"></span></td>
+            </tr>
+            <tr>
+                <td><label for="name">Mot de passe:</label></td>
+                <td><input type="password" id="mdp" name="name" required minlength="3" maxlength="20" size="10" required pattern="(?=.*[A-Za-z]).{8,}"></td>
+                <td><span id="error4" class="error-message"></span> <span id="valid4" class="valid-message"></span></td>
+            </tr>
+            <tr>
+                <td><button type="button" onclick="validerChamps()">S'inscrire</button></td>
+            </tr>
+            <tr>
+                <td colspan="3" id="successMessage" class="valid-message"></td>
+            </tr>
+        </table>
+    </form>
+
+    <script>
+        var b = document.querySelector('button');
+        var error = document.getElementById('error');
+        var valid = document.getElementById('valid');
+        var error1 = document.getElementById('error1');
+        var valid1 = document.getElementById('valid1');
+        var error2 = document.getElementById('error2');
+        var valid2 = document.getElementById('valid2');
+        var error3 = document.getElementById('error3');
+        var valid3 = document.getElementById('valid3');
+        var error4 = document.getElementById('error4');
+        var valid4 = document.getElementById('valid4');
+        var error5 = document.getElementById('error5');
+        var valid5 = document.getElementById('valid5');
+        var successMessage = document.getElementById('successMessage');
+
+        b.addEventListener('click', function () {
+            var nom = document.getElementById('nom').value;
+            var prenom = document.getElementById('prenom').value;
+            var tel = document.getElementById('tel').value;
+            var date = document.getElementById('date').value;
+            var date1 = new Date(date).toLocaleDateString('en-GB');
+            var mdp = document.getElementById('mdp').value;
+            var aujourdhui = new Date().toLocaleDateString('en-GB');
+
+            if (nom.length >= 1 && /^[a-zA-Z]+$/.test(nom)) {
+                valid.textContent = "Correct";
+                error.textContent = "";
+            } else {
+                valid.textContent = "";
+                error.textContent = "Veuillez entrer un nom valide (lettres uniquement)";
+            }
+
+            if (prenom.length >= 1) {
+                valid1.textContent = "Correct";
+                error1.textContent = "";
+            } else {
+                valid1.textContent = "";
+                error1.textContent = "Veuillez entrer un prenom valide (lettres uniquement)";
+            }
+
+            if (tel.length == 8 && /^[0-9]+$/.test(tel)) {
+                valid2.textContent = "Correct";
+                error2.textContent = "";
+            } else {
+                valid2.textContent = "";
+                error2.textContent = "Veuillez entrer un numéro de téléphone valide (8 chiffres)";
+            }
+
+            if (date1 < aujourdhui && /^\d{2}\/\d{2}\/\d{4}$/.test(date1)) {
+                valid3.textContent = "Correct";
+                error3.textContent = "";
+            } else {
+                valid3.textContent = "";
+                error3.textContent = "La date de naissance doit etre inférieure à la date d'aujourd'hui";
+            }
+
+            if (mdp.length >= 8 && /[a-zA-Z]/.test(mdp) && /\d/.test(mdp)) {
+                valid4.textContent = "Correct";
+                error4.textContent = "";
+            } else {
+                valid4.textContent = "";
+                error4.textContent = "Veuillez entrer un mot de passe valide (Le mot de passe doit contenir au moins 8 caractères, incluant au moins un chiffre, une lettre minuscule et une lettre majuscule)";
+            }
+
+            if (
+                valid.textContent === "Correct" &&
+                valid1.textContent === "Correct" &&
+                valid2.textContent === "Correct" &&
+                valid3.textContent === "Correct" &&
+                valid4.textContent === "Correct"
+            ) {
+                successMessage.textContent = "Toutes les conditions sont correctes!";
+            } else {
+                successMessage.textContent = ""; 
+            }
+        });
+        document.getElementById('email').addEventListener(onkeyup, function () {
+            var email = document.getElementById('email').value;
+            if (email.includes('@esprit.tn')) {
+                valid5.textContent = "Correct";
+                error5.textContent = "";
+            } else {
+                valid5.textContent = "";
+                error5.textContent = "Veuillez entrer une adresse email valide (@esprit.tn)";
+            }
+        });
+    </script>
+</body>
+
+</html>
